@@ -80,7 +80,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         $this->emitter->emit($response);
         ob_end_clean();
         foreach (HeaderStack::stack() as $header) {
-            self::assertStringNotContainsString('Content-Length:', $header['header']);
+            self::assertNotContains('Content-Length:', $header['header']);
         }
     }
 
@@ -135,7 +135,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
             strlen($contents),
             $startPosition,
             function (int $bufferLength) use (&$peakBufferLength) {
-                self::assertIsInt($peakBufferLength);
+                self::assertTrue(is_int($peakBufferLength));
                 if ($bufferLength > $peakBufferLength) {
                     $peakBufferLength = $bufferLength;
                 }
@@ -282,7 +282,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         $peakBufferLength = 0;
 
         $trackPeakBufferLength = static function (int $bufferLength) use (&$peakBufferLength) {
-            self::assertIsInt($peakBufferLength);
+            self::assertTrue(is_int($peakBufferLength));
             if ($bufferLength > $peakBufferLength) {
                 $peakBufferLength = $bufferLength;
             }
@@ -433,7 +433,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         };
 
         $contentsCallback      = function (int $position, $length = null) use (&$sizeBytes): string {
-            self::assertIsInt($sizeBytes);
+            self::assertTrue(is_int($sizeBytes));
             if (! $length) {
                 $length = $sizeBytes - $position;
             }
@@ -447,8 +447,8 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
             }
         };
 
-        self::assertIsInt($sizeBytes);
-        self::assertIsInt($position);
+        self::assertTrue(is_int($sizeBytes));
+        self::assertTrue(is_int($position));
         $streamHelper = new MockStreamHelper(
             $contentsCallback,
             $sizeBytes,
@@ -489,7 +489,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
 
         ob_start(
             function () use (&$closureTrackMemoryUsage) {
-                self::assertIsCallable($closureTrackMemoryUsage);
+                self::assertTrue(is_callable($closureTrackMemoryUsage));
                 $closureTrackMemoryUsage();
                 return '';
             },
@@ -512,8 +512,8 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
         $localMemoryUsage = memory_get_usage();
 
         self::assertLessThanOrEqual($maxBufferLength, $peakBufferLength);
-        self::assertIsInt($peakMemoryUsage);
-        self::assertLessThanOrEqual($maxAllowedMemoryUsage, $peakMemoryUsage - $localMemoryUsage);
+        self::assertTrue(is_int($peakMemoryUsage));
+        self::asseassertIsCallablertLessThanOrEqual($maxAllowedMemoryUsage, $peakMemoryUsage - $localMemoryUsage);
     }
 
     /**

@@ -27,6 +27,6 @@ class ConfigProviderTest extends TestCase
     {
         $config = ($this->provider)();
         self::assertArrayHasKey('dependencies', $config);
-        self::assertIsArray($config['dependencies']);
+        self::assertTrue(is_array($config['dependencies']));
     }
 }

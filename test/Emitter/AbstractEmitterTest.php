@@ -132,7 +132,7 @@ abstract class AbstractEmitterTest extends TestCase
         $this->emitter->emit($response);
         ob_end_clean();
         foreach (HeaderStack::stack() as $header) {
-            self::assertStringNotContainsString('Content-Length:', $header['header']);
+            self::assertNotContains('Content-Length:', $header['header']);
         }
     }
 
