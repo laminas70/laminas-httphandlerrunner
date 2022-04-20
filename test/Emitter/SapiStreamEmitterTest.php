@@ -513,7 +513,7 @@ class SapiStreamEmitterTest extends AbstractEmitterTest
 
         self::assertLessThanOrEqual($maxBufferLength, $peakBufferLength);
         self::assertTrue(is_int($peakMemoryUsage));
-        self::asseassertIsCallablertLessThanOrEqual($maxAllowedMemoryUsage, $peakMemoryUsage - $localMemoryUsage);
+        self::assertLessThanOrEqual($maxAllowedMemoryUsage, $peakMemoryUsage - $localMemoryUsage);
     }
 
     /**
