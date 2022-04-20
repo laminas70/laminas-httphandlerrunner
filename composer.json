@@ -65,5 +65,8 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "static-analysis": "psalm --shepherd --stats"
+    },
+    "replace": {
+        "laminas/laminas-httphandlerrunner": "*"
     }
 }
