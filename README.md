@@ -1,6 +1,7 @@
 # laminas-httphandlerrunner
 
-[![Build Status](https://github.com/laminas/laminas-httphandlerrunner/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-httphandlerrunner/actions?query=workflow%3A"Continuous+Integration")
+[![Build Status](https://github.com/laminas70/laminas-httphandlerrunner/workflows/Continuous%20Integration/badge.svg)]
+(https://github.com/laminas70/laminas-httphandlerrunner/actions?query=workflow%3A"Continuous+Integration")
 
 > ## 🇷🇺 Русским гражданам
 > 
@@ -34,7 +35,7 @@ fire off the `RequestHandlerInterface` representing your application.
 Run the following to install this library:
 
 ```bash
-$ composer require laminas/laminas-httphandlerrunner
+$ composer require laminas70/laminas-httphandlerrunner
 ```
 
 ## Documentation

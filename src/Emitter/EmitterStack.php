@@ -30,8 +30,9 @@ class EmitterStack extends SplStack implements EmitterInterface
      *
      * As such, return a boolean false value from an emitter to indicate it
      * cannot emit the response, allowing the next emitter to try.
+     * @param \Psr\Http\Message\ResponseInterface $response
      */
-    public function emit(ResponseInterface $response): bool
+    public function emit($response): bool
     {
         foreach ($this as $emitter) {
             if (false !== $emitter->emit($response)) {
@@ -94,8 +95,9 @@ class EmitterStack extends SplStack implements EmitterInterface
      * @param mixed $emitter
      * @throws Exception\InvalidEmitterException For non-emitter instances.
      * @psalm-assert EmitterInterface $emitter
+     * @return void
      */
-    private function validateEmitter($emitter): void
+    private function validateEmitter($emitter)
     {
         if (! $emitter instanceof EmitterInterface) {
             throw Exception\InvalidEmitterException::forEmitter($emitter);

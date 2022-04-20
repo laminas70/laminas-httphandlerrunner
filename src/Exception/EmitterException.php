@@ -10,7 +10,11 @@ use function sprintf;
 
 class EmitterException extends RuntimeException implements ExceptionInterface
 {
-    public static function forHeadersSent(string $filename, int $line): self
+    /**
+     * @param string $filename
+     * @param int $line
+     */
+    public static function forHeadersSent($filename, $line): self
     {
         return new self(sprintf('Unable to emit response; headers already sent in %s:%d', $filename, $line));
     }

@@ -69,7 +69,10 @@ final class RequestHandlerRunner implements RequestHandlerRunnerInterface
         $this->serverRequestErrorResponseGenerator = $serverRequestErrorResponseGenerator;
     }
 
-    public function run(): void
+    /**
+     * @return void
+     */
+    public function run()
     {
         try {
             $request = ($this->serverRequestFactory)();
@@ -84,7 +87,10 @@ final class RequestHandlerRunner implements RequestHandlerRunnerInterface
         $this->emitter->emit($response);
     }
 
-    private function emitMarshalServerRequestException(Throwable $exception): void
+    /**
+     * @return void
+     */
+    private function emitMarshalServerRequestException(Throwable $exception)
     {
         $response = ($this->serverRequestErrorResponseGenerator)($exception);
         $this->emitter->emit($response);

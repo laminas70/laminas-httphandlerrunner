@@ -4,7 +4,7 @@ To install this package, run the following [composer](https://getcomposer.org)
 command:
 
 ```bash
-$ composer require laminas/laminas-httphandlerrunner
+$ composer require laminas70/laminas-httphandlerrunner
 ```
 
 The package provides both [emitters](emitters.md) and the [request handler

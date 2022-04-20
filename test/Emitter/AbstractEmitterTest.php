@@ -23,20 +23,29 @@ abstract class AbstractEmitterTest extends TestCase
     /** @var EmitterInterface */
     protected $emitter;
 
-    public function setUp(): void
+    /**
+     * @return void
+     */
+    public function setUp()
     {
         HeaderStack::reset();
         HeadersSent::reset();
         $this->emitter = new SapiEmitter();
     }
 
-    public function tearDown(): void
+    /**
+     * @return void
+     */
+    public function tearDown()
     {
         HeaderStack::reset();
         HeadersSent::reset();
     }
 
-    public function testEmitsResponseHeaders(): void
+    /**
+     * @return void
+     */
+    public function testEmitsResponseHeaders()
     {
         $response = (new Response())
             ->withStatus(200)
@@ -51,7 +60,10 @@ abstract class AbstractEmitterTest extends TestCase
         self::assertTrue(HeaderStack::has('Content-Type: text/plain'));
     }
 
-    public function testEmitsMessageBody(): void
+    /**
+     * @return void
+     */
+    public function testEmitsMessageBody()
     {
         $response = (new Response())
             ->withStatus(200)
@@ -62,7 +74,10 @@ abstract class AbstractEmitterTest extends TestCase
         $this->emitter->emit($response);
     }
 
-    public function testMultipleSetCookieHeadersAreNotReplaced(): void
+    /**
+     * @return void
+     */
+    public function testMultipleSetCookieHeadersAreNotReplaced()
     {
         $response = (new Response())
             ->withStatus(200)
@@ -80,7 +95,10 @@ abstract class AbstractEmitterTest extends TestCase
         self::assertSame($expectedStack, HeaderStack::stack());
     }
 
-    public function testDoesNotLetResponseCodeBeOverriddenByPHP(): void
+    /**
+     * @return void
+     */
+    public function testDoesNotLetResponseCodeBeOverriddenByPHP()
     {
         $response = (new Response())
             ->withStatus(202)
@@ -98,7 +116,10 @@ abstract class AbstractEmitterTest extends TestCase
         self::assertSame($expectedStack, HeaderStack::stack());
     }
 
-    public function testDoesNotInjectContentLengthHeaderIfStreamSizeIsUnknown(): void
+    /**
+     * @return void
+     */
+    public function testDoesNotInjectContentLengthHeaderIfStreamSizeIsUnknown()
     {
         $stream = $this->createMock(StreamInterface::class);
         $stream->method('__toString')->willReturn('Content!');
@@ -115,7 +136,10 @@ abstract class AbstractEmitterTest extends TestCase
         }
     }
 
-    public function testWillThrowEmitterExceptionWhenHeadersAreAlreadySent(): void
+    /**
+     * @return void
+     */
+    public function testWillThrowEmitterExceptionWhenHeadersAreAlreadySent()
     {
         $sentInLine = __LINE__;
         HeadersSent::markSent(__FILE__, $sentInLine);

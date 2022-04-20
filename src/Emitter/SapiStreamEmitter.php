@@ -31,8 +31,9 @@ class SapiStreamEmitter implements EmitterInterface
      *
      * Emits the status line and headers via the header() function, and the
      * body content via the output buffer.
+     * @param \Psr\Http\Message\ResponseInterface $response
      */
-    public function emit(ResponseInterface $response): bool
+    public function emit($response): bool
     {
         $this->assertNoPreviousOutput();
         $this->emitHeaders($response);
@@ -53,8 +54,9 @@ class SapiStreamEmitter implements EmitterInterface
 
     /**
      * Emit the message body.
+     * @return void
      */
-    private function emitBody(ResponseInterface $response): void
+    private function emitBody(ResponseInterface $response)
     {
         $body = $response->getBody();
 
@@ -76,10 +78,11 @@ class SapiStreamEmitter implements EmitterInterface
      * Emit a range of the message body.
      *
      * @psalm-param ParsedRangeType $range
+     * @return void
      */
-    private function emitBodyRange(array $range, ResponseInterface $response): void
+    private function emitBodyRange(array $range, ResponseInterface $response)
     {
-        [, $first, $last] = $range;
+        list(, $first, $last) = $range;
 
         $body = $response->getBody();
 
@@ -118,7 +121,7 @@ class SapiStreamEmitter implements EmitterInterface
      *     content range or an invalid content range is provided
      * @psalm-return null|ParsedRangeType
      */
-    private function parseContentRange(string $header): ?array
+    private function parseContentRange(string $header)
     {
         if (! preg_match('/(?P<unit>[\w]+)\s+(?P<first>\d+)-(?P<last>\d+)\/(?P<length>\d+|\*)/', $header, $matches)) {
             return null;

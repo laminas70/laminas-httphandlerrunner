@@ -16,23 +16,32 @@ class EmitterStackTest extends TestCase
     /** @var EmitterStack */
     private $emitter;
 
-    public function setUp(): void
+    /**
+     * @return void
+     */
+    public function setUp()
     {
         $this->emitter = new EmitterStack();
     }
 
-    public function testIsAnSplStack(): void
+    /**
+     * @return void
+     */
+    public function testIsAnSplStack()
     {
         $this->assertInstanceOf(SplStack::class, $this->emitter);
     }
 
-    public function testIsAnEmitterImplementation(): void
+    /**
+     * @return void
+     */
+    public function testIsAnEmitterImplementation()
     {
         $this->assertInstanceOf(EmitterInterface::class, $this->emitter);
     }
 
-    /** @return iterable<string, mixed[]> */
-    public function nonEmitterValues(): iterable
+    /** @return mixed[] */
+    public function nonEmitterValues()
     {
         return [
             'null'       => [null],
@@ -51,8 +60,9 @@ class EmitterStackTest extends TestCase
     /**
      * @dataProvider nonEmitterValues
      * @param mixed $value
+     * @return void
      */
-    public function testCannotPushNonEmitterToStack($value): void
+    public function testCannotPushNonEmitterToStack($value)
     {
         $this->expectException(Exception\InvalidEmitterException::class);
         /** @psalm-suppress MixedArgument */
@@ -62,8 +72,9 @@ class EmitterStackTest extends TestCase
     /**
      * @dataProvider nonEmitterValues
      * @param mixed $value
+     * @return void
      */
-    public function testCannotUnshiftNonEmitterToStack($value): void
+    public function testCannotUnshiftNonEmitterToStack($value)
     {
         $this->expectException(Exception\InvalidEmitterException::class);
         /** @psalm-suppress MixedArgument */
@@ -73,15 +84,19 @@ class EmitterStackTest extends TestCase
     /**
      * @dataProvider nonEmitterValues
      * @param mixed $value
+     * @return void
      */
-    public function testCannotSetNonEmitterToSpecificIndex($value): void
+    public function testCannotSetNonEmitterToSpecificIndex($value)
     {
         $this->expectException(Exception\InvalidEmitterException::class);
         /** @psalm-suppress MixedArgument */
         $this->emitter->offsetSet(0, $value);
     }
 
-    public function testOffsetSetReplacesExistingValue(): void
+    /**
+     * @return void
+     */
+    public function testOffsetSetReplacesExistingValue()
     {
         $first       = $this->createMock(EmitterInterface::class);
         $replacement = $this->createMock(EmitterInterface::class);
@@ -90,7 +105,10 @@ class EmitterStackTest extends TestCase
         $this->assertSame($replacement, $this->emitter->pop());
     }
 
-    public function testUnshiftAddsNewEmitter(): void
+    /**
+     * @return void
+     */
+    public function testUnshiftAddsNewEmitter()
     {
         $first  = $this->createMock(EmitterInterface::class);
         $second = $this->createMock(EmitterInterface::class);
@@ -99,7 +117,10 @@ class EmitterStackTest extends TestCase
         $this->assertSame($first, $this->emitter->pop());
     }
 
-    public function testEmitLoopsThroughEmittersUntilOneReturnsTrueValue(): void
+    /**
+     * @return void
+     */
+    public function testEmitLoopsThroughEmittersUntilOneReturnsTrueValue()
     {
         $first = $this->createMock(EmitterInterface::class);
         $first->expects($this->never())->method('emit');
@@ -119,7 +140,10 @@ class EmitterStackTest extends TestCase
         $this->assertTrue($this->emitter->emit($response));
     }
 
-    public function testEmitReturnsFalseIfLastEmmitterReturnsFalse(): void
+    /**
+     * @return void
+     */
+    public function testEmitReturnsFalseIfLastEmmitterReturnsFalse()
     {
         $first = $this->createMock(EmitterInterface::class);
         $first->method('emit')->with($this->isInstanceOf(ResponseInterface::class))->willReturn(false);
@@ -131,7 +155,10 @@ class EmitterStackTest extends TestCase
         $this->assertFalse($this->emitter->emit($response));
     }
 
-    public function testEmitReturnsFalseIfNoEmittersAreComposed(): void
+    /**
+     * @return void
+     */
+    public function testEmitReturnsFalseIfNoEmittersAreComposed()
     {
         $response = $this->createMock(ResponseInterface::class);
 

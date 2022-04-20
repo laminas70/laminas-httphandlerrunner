@@ -12,12 +12,18 @@ class ConfigProviderTest extends TestCase
     /** @var ConfigProvider */
     private $provider;
 
-    public function setUp(): void
+    /**
+     * @return void
+     */
+    public function setUp()
     {
         $this->provider = new ConfigProvider();
     }
 
-    public function testReturnedArrayContainsDependencies(): void
+    /**
+     * @return void
+     */
+    public function testReturnedArrayContainsDependencies()
     {
         $config = ($this->provider)();
         self::assertArrayHasKey('dependencies', $config);

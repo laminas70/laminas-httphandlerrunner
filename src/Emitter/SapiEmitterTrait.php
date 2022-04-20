@@ -28,8 +28,9 @@ trait SapiEmitterTrait
      *
      * @throws EmitterException If headers have already been sent.
      * @throws EmitterException If output is present in the output buffer.
+     * @return void
      */
-    private function assertNoPreviousOutput(): void
+    private function assertNoPreviousOutput()
     {
         $filename = null;
         $line     = null;
@@ -54,8 +55,9 @@ trait SapiEmitterTrait
      * the emitted response.
      *
      * @see \Laminas\HttpHandlerRunner\Emitter\SapiEmitterTrait::emitHeaders()
+     * @return void
      */
-    private function emitStatusLine(ResponseInterface $response): void
+    private function emitStatusLine(ResponseInterface $response)
     {
         $reasonPhrase = $response->getReasonPhrase();
         $statusCode   = $response->getStatusCode();
@@ -75,8 +77,9 @@ trait SapiEmitterTrait
      * is an array with multiple values, ensures that each is sent
      * in such a way as to create aggregate headers (instead of replace
      * the previous).
+     * @return void
      */
-    private function emitHeaders(ResponseInterface $response): void
+    private function emitHeaders(ResponseInterface $response)
     {
         $statusCode = $response->getStatusCode();
 
@@ -103,7 +106,11 @@ trait SapiEmitterTrait
         return ucwords($header, '-');
     }
 
-    private function headersSent(?string &$filename = null, ?int &$line = null): bool
+    /**
+     * @param string|null $filename
+     * @param int|null $line
+     */
+    private function headersSent(&$filename = null, &$line = null): bool
     {
         if (function_exists('Laminas\HttpHandlerRunner\Emitter\headers_sent')) {
             // phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName
@@ -113,7 +120,10 @@ trait SapiEmitterTrait
         return headers_sent($filename, $line);
     }
 
-    private function header(string $headerName, bool $replace, int $statusCode): void
+    /**
+     * @return void
+     */
+    private function header(string $headerName, bool $replace, int $statusCode)
     {
         if (function_exists('Laminas\HttpHandlerRunner\Emitter\header')) {
             // phpcs:ignore SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName

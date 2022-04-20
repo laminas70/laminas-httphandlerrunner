@@ -16,7 +16,10 @@ use Throwable;
 
 class RequestHandlerRunnerTest extends TestCase
 {
-    public function testUsesErrorResponseGeneratorToGenerateResponseWhenRequestFactoryRaisesException(): void
+    /**
+     * @return void
+     */
+    public function testUsesErrorResponseGeneratorToGenerateResponseWhenRequestFactoryRaisesException()
     {
         $exception            = new Exception();
         $serverRequestFactory = function () use ($exception): ServerRequestInterface {
@@ -46,7 +49,10 @@ class RequestHandlerRunnerTest extends TestCase
         self::assertNull($runner->run());
     }
 
-    public function testRunPassesRequestGeneratedByRequestFactoryToHandleWhenNoRequestPassedToRun(): void
+    /**
+     * @return void
+     */
+    public function testRunPassesRequestGeneratedByRequestFactoryToHandleWhenNoRequestPassedToRun()
     {
         $request = $this->createMock(ServerRequestInterface::class);
 

@@ -15,8 +15,9 @@ class SapiEmitter implements EmitterInterface
      *
      * Emits the status line and headers via the header() function, and the
      * body content via the output buffer.
+     * @param \Psr\Http\Message\ResponseInterface $response
      */
-    public function emit(ResponseInterface $response): bool
+    public function emit($response): bool
     {
         $this->assertNoPreviousOutput();
 
@@ -29,8 +30,9 @@ class SapiEmitter implements EmitterInterface
 
     /**
      * Emit the message body.
+     * @return void
      */
-    private function emitBody(ResponseInterface $response): void
+    private function emitBody(ResponseInterface $response)
     {
         echo $response->getBody();
     }

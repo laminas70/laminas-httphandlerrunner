@@ -35,7 +35,7 @@ class MockStreamHelper
         $contents,
         int $size,
         int $startPosition,
-        ?callable $trackPeakBufferLength = null
+        $trackPeakBufferLength = null
     ) {
         $this->contents              = $contents;
         $this->size                  = $size;
@@ -60,7 +60,11 @@ class MockStreamHelper
         return $this->position >= $this->size;
     }
 
-    public function handleSeek(int $offset, ?int $whence = SEEK_SET): bool
+    /**
+     * @param int $offset
+     * @param int|null $whence
+     */
+    public function handleSeek($offset, $whence = SEEK_SET): bool
     {
         if ($offset >= $this->size) {
             return false;
@@ -76,7 +80,10 @@ class MockStreamHelper
         return true;
     }
 
-    public function handleRead(int $length): string
+    /**
+     * @param int $length
+     */
+    public function handleRead($length): string
     {
         if ($this->trackPeakBufferLength) {
             ($this->trackPeakBufferLength)($length);

@@ -19,6 +19,7 @@ interface RequestHandlerRunnerInterface
 {
     /**
      * Run the application
+     * @return void
      */
-    public function run(): void;
+    public function run();
 }

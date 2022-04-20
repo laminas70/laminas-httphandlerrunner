@@ -16,14 +16,20 @@ final class HeadersSent
     /** @var null|int */
     public static $line;
 
-    public static function reset(): void
+    /**
+     * @return void
+     */
+    public static function reset()
     {
         self::$headerSent = false;
         self::$filename   = null;
         self::$line       = null;
     }
 
-    public static function markSent(string $filename, int $line): void
+    /**
+     * @return void
+     */
+    public static function markSent(string $filename, int $line)
     {
         self::$headerSent = true;
         self::$filename   = $filename;
@@ -36,7 +42,11 @@ final class HeadersSent
     }
 }
 
-function headers_sent(?string &$filename = null, ?int &$line = null): bool
+/**
+ * @param string|null $filename
+ * @param int|null $line
+ */
+function headers_sent(&$filename = null, &$line = null): bool
 {
     $filename = HeadersSent::$filename;
     $line     = HeadersSent::$line;
@@ -45,8 +55,10 @@ function headers_sent(?string &$filename = null, ?int &$line = null): bool
 
 /**
  * Emit a header, without creating actual output artifacts
+ * @param int|null $httpResponseCode
+ * @return void
  */
-function header(string $headerName, bool $replace = true, ?int $httpResponseCode = null): void
+function header(string $headerName, bool $replace = true, $httpResponseCode = null)
 {
     HeaderStack::push(
         [
